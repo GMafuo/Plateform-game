@@ -6,14 +6,25 @@ import spriteRunLeft from '../img/spriteRunLeft.png'
 import spriteRunRight from '../img/spriteRunRight.png'
 import spriteStandLeft from '../img/spriteStandLeft.png'
 import spriteStandRight from '../img/spriteStandRight.png'
+import spriteEnemy from '../img/spriteGoomba.png'
+
+import 'regenerator-runtime/runtime';
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = 1024
-canvas.height = 526
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Ajoutez ici tout autre code que vous souhaitez exécuter lorsque la fenêtre est redimensionnée
+});
 
 const gravity = 1.5
+
 class Player {
     constructor() {
         this.speed = 7
@@ -44,6 +55,7 @@ class Player {
                 width: 127.875
             }
         }
+
         this.currentSprite = this.sprites.stand.right
         this.currentCropWidth = 177
     }
@@ -59,21 +71,33 @@ class Player {
             this.position.y, 
             this.width, 
             this.height
-            )
+        )
     }
 
     update() {
         this.frames++
-        if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) this.frames = 0
-        else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left)) this.frames = 0
+    
+        if (
+          this.frames > 59 &&
+          (this.currentSprite === this.sprites.stand.right ||
+            this.currentSprite === this.sprites.stand.left)
+        )
+          this.frames = 0
+        else if (
+          this.frames > 29 &&
+          (this.currentSprite === this.sprites.run.right ||
+            this.currentSprite === this.sprites.run.left)
+        )
+          this.frames = 0
+    
         this.draw()
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
-
+    
         if (this.position.y + this.height + this.velocity.y <= canvas.height)
-            this.velocity.y += gravity
+          this.velocity.y += gravity
+      }
     }
-}
 
 class Plateform {
     constructor({ x, y, image }) {
@@ -88,7 +112,7 @@ class Plateform {
     }
 
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y)
+        c.drawImage(this.image, this.position.x, this.position.y - (this.image.height - this.height));
     }
 }
 
@@ -109,17 +133,75 @@ class GenericObject {
     }
 }
 
-function createImage(imageSrc) {
-const image = new Image()
-image.src = imageSrc
-return image
-}
+class Enemy {
+    constructor({ position, velocity }) {
+      this.position = {
+        x: position.x,
+        y: position.y
+      }
+  
+      this.velocity = {
+        x: velocity.x,
+        y: velocity.y
+      }
+  
+      this.width = 43.33
+      this.height = 50
 
-let plateformImage = createImage(plateform)
+      this.image = createImage(spriteEnemy)
+      this.frames = 0
+    }
+  
+    draw() {
+    //   c.fillStyle = 'red'
+    //   c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    c.drawImage(
+        this.image,
+        130 * this.frames,
+        0,
+        130,
+        150,
+        this.position.x,
+        this.position.y,
+        this.width,
+        this.height
+    )
+}
+  
+    update() {
+        this.frames++
+        if (this.frames >=58) this.frames = 0
+      this.draw()
+      this.position.x += this.velocity.x
+      this.position.y += this.velocity.y
+  
+      if (this.position.y + this.height + this.velocity.y <= canvas.height)
+        this.velocity.y += gravity
+    }
+  }
+
+function createImage(imageSrc) {
+    const image = new Image()
+    image.src = imageSrc
+    return image
+  }
+
+function createImageAsync(imageSrc) {
+    return new Promise((resolve) => {
+      const image = new Image()
+      image.onload = () => {
+        resolve(image)
+      }
+      image.src = imageSrc
+    })
+  }
+
+let plateformImage = createImageAsync(plateform)
 
 let player = new Player()
 let plateforms = []
 let genericObjects = []
+let enemies = []
 
 let lastKey
 const keys = {
@@ -133,43 +215,77 @@ const keys = {
 
 let scrollOffset = 0
 
-function init() {
-player = new Player()
-plateforms = [
-    new Plateform({
-        x: plateformImage.width * 4 + 300 + plateformImage.width, y: 270, image: createImage(pjump)
-    }),
-    new Plateform({
-        x: -1, y: 420, image: plateformImage
-    }), 
-    new Plateform({
-        x: plateformImage.width - 1, y: 420, image: plateformImage
-    }),
-    new Plateform({
-        x: plateformImage.width - 1, y: 420, image: plateformImage
-    }),
-    new Plateform({
-        x: plateformImage.width * 2 + 200, y: 420, image: plateformImage
-    }),
-    new Plateform({
-        x: plateformImage.width * 3 + 300, y: 420, image: plateformImage
-    }),
-    new Plateform({
-        x: plateformImage.width * 4 + 300, y: 420, image: plateformImage
-    }),
-    new Plateform({
-        x: plateformImage.width * 5 + 800, y: 420, image: plateformImage
-    }),
-]
-genericObjects = [
-    new GenericObject({
-        x: 0,
-        y: 0,
-        image: createImage(background)
-    })
-]
+function isOnTopOfPlatform({ object, platform }) {
+    return (
+      object.position.y + object.height <= platform.position.y &&
+      object.position.y + object.height + object.velocity.y >=
+        platform.position.y &&
+      object.position.x + object.width >= platform.position.x &&
+      object.position.x <= platform.position.x + platform.width
+    )
+  }
+  
+  function collisionTop({ object1, object2 }) {
+    return (
+      object1.position.y + object1.height <= object2.position.y &&
+      object1.position.y + object1.height + object1.velocity.y >=
+        object2.position.y &&
+      object1.position.x + object1.width >= object2.position.x &&
+      object1.position.x <= object2.position.x + object2.width
+    )
+  }
 
-scrollOffset = 0
+async function init() {
+    plateformImage = await createImageAsync(plateform)
+
+    player = new Player()
+    enemies = [
+        new Enemy({
+          position: {
+            x: 800,
+            y: 100
+          },
+          velocity: {
+            x: -0.3,
+            y: 0
+          }
+        })
+      ]
+    plateforms = [
+        new Plateform({
+            x: plateformImage.width * 4 + 300 + plateformImage.width, y: 400, image: createImage(pjump)
+        }),
+        new Plateform({
+            x: -1, y: 615, image: plateformImage
+        }), 
+        new Plateform({
+            x: plateformImage.width - 1, y: 615, image: plateformImage
+        }),
+        new Plateform({
+            x: plateformImage.width - 1, y: 615, image: plateformImage
+        }),
+        new Plateform({
+            x: plateformImage.width * 2 + 200, y: 615, image: plateformImage
+        }),
+        new Plateform({
+            x: plateformImage.width * 3 + 300, y: 615, image: plateformImage
+        }),
+        new Plateform({
+            x: plateformImage.width * 4 + 300, y: 615, image: plateformImage
+        }),
+        new Plateform({
+            x: plateformImage.width * 5 + 800, y: 615, image: plateformImage
+        }),
+    ]
+    genericObjects = [
+        new GenericObject({
+            x: 0,
+            y: 0,
+            image: createImage(background)
+        })
+    ]
+
+    scrollOffset = 0
 
 }
 
@@ -185,6 +301,27 @@ function animate() {
     plateforms.forEach(plateform => {
         plateform.draw()
     })
+
+    enemies.forEach((enemy, index) => {
+        enemy.update()
+    
+        if (
+          collisionTop({
+            object1: player,
+            object2: enemy
+          })
+        ) {
+          player.velocity.y -= 40
+          setTimeout(() => {
+            enemies.splice(index, 1)
+          }, 0)
+        } else if (
+          player.position.x + player.width >= enemy.position.x &&
+          player.position.y + player.height >= enemy.position.y &&
+          player.position.x <= enemy.position.x + enemy.width
+        )
+          init()
+      })
     player.update()
 
 
@@ -198,33 +335,55 @@ function animate() {
         player.velocity.x = 0
 
         if (keys.right.pressed) {
-            plateforms.forEach(plateform => {
-                scrollOffset += player.speed
-                plateform.position.x -= player.speed
+            scrollOffset += player.speed
+            plateforms.forEach((platform) => {
+              platform.position.x -= player.speed
             })
-            genericObjects.forEach(genericObject => {
-                genericObject.position.x -= player.speed * 0.66
+            genericObjects.forEach((genericObject) => {
+              genericObject.position.x -= player.speed * 0.66
             })
-        } else if (keys.left.pressed && scrollOffset > 0) {
+            enemies.forEach((enemy) => {
+                enemy.position.x -= player.speed
+            })
+          } else if (keys.left.pressed && scrollOffset > 0) {
             scrollOffset -= player.speed
-            plateforms.forEach(plateform => {
-                plateform.position.x += player.speed
+      
+            plateforms.forEach((platform) => {
+              platform.position.x += player.speed
             })
-            genericObjects.forEach(genericObject => {
-                genericObject.position.x += player.speed * 0.66
+      
+            genericObjects.forEach((genericObject) => {
+              genericObject.position.x += player.speed * 0.66
+            })
+
+            enemies.forEach((enemy) => {
+                enemy.position.x += player.speed
             })
         }
     }
 
     // plateform collision
-    plateforms.forEach(plateform => {
-        if (player.position.y + player.height <= plateform.position.y &&
-            player.position.y + player.height + player.velocity.y >= plateform.position.y &&
-            player.position.x + player.width >= plateform.position.x &&
-            player.position.x <= plateform.position.x + plateform.width) {
-            player.velocity.y = 0
-        }
+    // platform collision detection
+  plateforms.forEach((platform) => {
+    if (
+      isOnTopOfPlatform({
+        object: player,
+        platform
+      })
+    ) {
+      player.velocity.y = 0
+    }
+
+    enemies.forEach((enemy) => {
+      if (
+        isOnTopOfPlatform({
+          object: enemy,
+          platform
+        })
+      )
+        enemy.velocity.y = 0
     })
+  })
 
     // sprite switching
 
