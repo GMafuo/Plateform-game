@@ -134,11 +134,18 @@ class GenericObject {
 }
 
 class Enemy {
-    constructor({ position, velocity }) {
-      this.position = {
-        x: position.x,
-        y: position.y
-      }
+  constructor({
+    position,
+    velocity,
+    distance = {
+      limit: 50,
+      traveled: 0
+    }
+  }) {
+    this.position = {
+      x: position.x,
+      y: position.y
+    }
   
       this.velocity = {
         x: velocity.x,
@@ -150,6 +157,8 @@ class Enemy {
 
       this.image = createImage(spriteEnemy)
       this.frames = 0
+
+      this.distance = distance
     }
   
     draw() {
@@ -177,6 +186,15 @@ class Enemy {
   
       if (this.position.y + this.height + this.velocity.y <= canvas.height)
         this.velocity.y += gravity
+
+      // walk the goomba back and forth
+      this.distance.traveled += Math.abs(this.velocity.x)
+
+      if (this.distance.traveled > this.distance.limit) {
+        this.distance.traveled = 0
+        this.velocity.x = -this.velocity.x
+      }
+      console.log(this.distance.traveled)
     }
   }
 
@@ -288,6 +306,20 @@ async function init() {
         new Enemy({
           position: {
             x: 800,
+            y: 100
+          },
+          velocity: {
+            x: -0.3,
+            y: 0
+          },
+          distance: {
+            limit: 200,
+            traveled: 0
+          }
+        }),
+        new Enemy({
+          position: {
+            x: 900,
             y: 100
           },
           velocity: {

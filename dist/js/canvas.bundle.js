@@ -1122,7 +1122,12 @@ var GenericObject = /*#__PURE__*/function () {
 var Enemy = /*#__PURE__*/function () {
   function Enemy(_ref3) {
     var position = _ref3.position,
-        velocity = _ref3.velocity;
+        velocity = _ref3.velocity,
+        _ref3$distance = _ref3.distance,
+        distance = _ref3$distance === void 0 ? {
+      limit: 50,
+      traveled: 0
+    } : _ref3$distance;
 
     _classCallCheck(this, Enemy);
 
@@ -1138,6 +1143,7 @@ var Enemy = /*#__PURE__*/function () {
     this.height = 50;
     this.image = createImage(_img_spriteGoomba_png__WEBPACK_IMPORTED_MODULE_7__["default"]);
     this.frames = 0;
+    this.distance = distance;
   }
 
   _createClass(Enemy, [{
@@ -1155,7 +1161,16 @@ var Enemy = /*#__PURE__*/function () {
       this.draw();
       this.position.x += this.velocity.x;
       this.position.y += this.velocity.y;
-      if (this.position.y + this.height + this.velocity.y <= canvas.height) this.velocity.y += gravity;
+      if (this.position.y + this.height + this.velocity.y <= canvas.height) this.velocity.y += gravity; // walk the goomba back and forth
+
+      this.distance.traveled += Math.abs(this.velocity.x);
+
+      if (this.distance.traveled > this.distance.limit) {
+        this.distance.traveled = 0;
+        this.velocity.x = -this.velocity.x;
+      }
+
+      console.log(this.distance.traveled);
     }
   }]);
 
@@ -1277,6 +1292,19 @@ function _init() {
             enemies = [new Enemy({
               position: {
                 x: 800,
+                y: 100
+              },
+              velocity: {
+                x: -0.3,
+                y: 0
+              },
+              distance: {
+                limit: 200,
+                traveled: 0
+              }
+            }), new Enemy({
+              position: {
+                x: 900,
                 y: 100
               },
               velocity: {
