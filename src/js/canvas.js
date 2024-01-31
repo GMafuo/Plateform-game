@@ -168,7 +168,7 @@ class Enemy {
     )
 }
   
-    update() {
+    update() {  
         this.frames++
         if (this.frames >=58) this.frames = 0
       this.draw()
@@ -180,6 +180,40 @@ class Enemy {
     }
   }
 
+  class Particle {
+    constructor({ position, velocity, radius }) {
+      this.position = {
+        x: position.x,
+        y: position.y
+      }
+  
+      this.velocity = {
+        x: velocity.x,
+        y: velocity.y
+      }
+  
+      this.radius = radius
+      this.ttl = 300
+    }
+  
+    draw() {
+      c.beginPath()
+      c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false)
+      c.fillStyle = '#654428'
+      c.fill()
+      c.closePath()
+    }
+  
+    update() {
+      this.ttl--
+      this.draw()
+      this.position.x += this.velocity.x
+      this.position.y += this.velocity.y
+  
+      if (this.position.y + this.radius + this.velocity.y <= canvas.height)
+        this.velocity.y += gravity * 0.4
+    }
+  }
 function createImage(imageSrc) {
     const image = new Image()
     image.src = imageSrc
@@ -202,6 +236,7 @@ let player = new Player()
 let plateforms = []
 let genericObjects = []
 let enemies = []
+let particles = []
 
 let lastKey
 const keys = {
@@ -235,6 +270,16 @@ function isOnTopOfPlatform({ object, platform }) {
     )
   }
 
+  function isOnTopOfPlatformCircle({ object, platform }) {
+    return (
+      object.position.y + object.radius <= platform.position.y &&
+      object.position.y + object.radius + object.velocity.y >=
+        platform.position.y &&
+      object.position.x + object.radius >= platform.position.x &&
+      object.position.x <= platform.position.x + platform.width
+    )
+  }
+
 async function init() {
     plateformImage = await createImageAsync(plateform)
 
@@ -251,6 +296,7 @@ async function init() {
           }
         })
       ]
+    particles = []
     plateforms = [
         new Plateform({
             x: plateformImage.width * 4 + 300 + plateformImage.width, y: 400, image: createImage(pjump)
@@ -304,13 +350,29 @@ function animate() {
 
     enemies.forEach((enemy, index) => {
         enemy.update()
-    
+
+        // enemy stomp squish
         if (
           collisionTop({
             object1: player,
             object2: enemy
           })
         ) {
+          for (let i = 0; i < 50; i++) {
+            particles.push(
+              new Particle({
+                position: {
+                  x: enemy.position.x + enemy.width / 2,
+                  y: enemy.position.y + enemy.height / 2
+                },
+                velocity: {
+                  x: (Math.random() - 0.5) * 7,
+                  y: (Math.random() - 0.5) * 15
+                },
+                radius: Math.random() * 3
+              })
+            )
+          }
           player.velocity.y -= 40
           setTimeout(() => {
             enemies.splice(index, 1)
@@ -321,6 +383,10 @@ function animate() {
           player.position.x <= enemy.position.x + enemy.width
         )
           init()
+      })
+
+      particles.forEach((particle) => {
+        particle.update()
       })
     player.update()
 
@@ -345,6 +411,9 @@ function animate() {
             enemies.forEach((enemy) => {
                 enemy.position.x -= player.speed
             })
+            particles.forEach((particle) => {
+              particle.position.x -= player.speed
+            })
           } else if (keys.left.pressed && scrollOffset > 0) {
             scrollOffset -= player.speed
       
@@ -358,6 +427,9 @@ function animate() {
 
             enemies.forEach((enemy) => {
                 enemy.position.x += player.speed
+            })
+            particles.forEach((particle) => {
+              particle.position.x += player.speed
             })
         }
     }
@@ -373,6 +445,23 @@ function animate() {
     ) {
       player.velocity.y = 0
     }
+
+    // particles bounce
+    particles.forEach((particle, index) => {
+      if (
+        isOnTopOfPlatformCircle({
+          object: particle,
+          platform
+        })
+      ) {
+        particle.velocity.y = -particle.velocity.y * 0.9
+
+        if (particle.radius - 0.4 < 0) particles.splice(index, 1)
+        else particle.radius -= 0.4
+      }
+
+      if (particle.ttl < 0) particles.splice(index, 1)
+    })
 
     enemies.forEach((enemy) => {
       if (

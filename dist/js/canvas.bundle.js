@@ -1162,6 +1162,49 @@ var Enemy = /*#__PURE__*/function () {
   return Enemy;
 }();
 
+var Particle = /*#__PURE__*/function () {
+  function Particle(_ref4) {
+    var position = _ref4.position,
+        velocity = _ref4.velocity,
+        radius = _ref4.radius;
+
+    _classCallCheck(this, Particle);
+
+    this.position = {
+      x: position.x,
+      y: position.y
+    };
+    this.velocity = {
+      x: velocity.x,
+      y: velocity.y
+    };
+    this.radius = radius;
+    this.ttl = 300;
+  }
+
+  _createClass(Particle, [{
+    key: "draw",
+    value: function draw() {
+      c.beginPath();
+      c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
+      c.fillStyle = '#654428';
+      c.fill();
+      c.closePath();
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.ttl--;
+      this.draw();
+      this.position.x += this.velocity.x;
+      this.position.y += this.velocity.y;
+      if (this.position.y + this.radius + this.velocity.y <= canvas.height) this.velocity.y += gravity * 0.4;
+    }
+  }]);
+
+  return Particle;
+}();
+
 function createImage(imageSrc) {
   var image = new Image();
   image.src = imageSrc;
@@ -1185,6 +1228,7 @@ var player = new Player();
 var plateforms = [];
 var genericObjects = [];
 var enemies = [];
+var particles = [];
 var lastKey;
 var keys = {
   right: {
@@ -1196,16 +1240,22 @@ var keys = {
 };
 var scrollOffset = 0;
 
-function isOnTopOfPlatform(_ref4) {
-  var object = _ref4.object,
-      platform = _ref4.platform;
+function isOnTopOfPlatform(_ref5) {
+  var object = _ref5.object,
+      platform = _ref5.platform;
   return object.position.y + object.height <= platform.position.y && object.position.y + object.height + object.velocity.y >= platform.position.y && object.position.x + object.width >= platform.position.x && object.position.x <= platform.position.x + platform.width;
 }
 
-function collisionTop(_ref5) {
-  var object1 = _ref5.object1,
-      object2 = _ref5.object2;
+function collisionTop(_ref6) {
+  var object1 = _ref6.object1,
+      object2 = _ref6.object2;
   return object1.position.y + object1.height <= object2.position.y && object1.position.y + object1.height + object1.velocity.y >= object2.position.y && object1.position.x + object1.width >= object2.position.x && object1.position.x <= object2.position.x + object2.width;
+}
+
+function isOnTopOfPlatformCircle(_ref7) {
+  var object = _ref7.object,
+      platform = _ref7.platform;
+  return object.position.y + object.radius <= platform.position.y && object.position.y + object.radius + object.velocity.y >= platform.position.y && object.position.x + object.radius >= platform.position.x && object.position.x <= platform.position.x + platform.width;
 }
 
 function init() {
@@ -1234,6 +1284,7 @@ function _init() {
                 y: 0
               }
             })];
+            particles = [];
             plateforms = [new Plateform({
               x: plateformImage.width * 4 + 300 + plateformImage.width,
               y: 400,
@@ -1274,7 +1325,7 @@ function _init() {
             })];
             scrollOffset = 0;
 
-          case 8:
+          case 9:
           case "end":
             return _context.stop();
         }
@@ -1289,29 +1340,40 @@ function animate() {
   c.fillStyle = 'wheat';
   c.fillRect(0, 0, canvas.width, canvas.height);
   genericObjects.forEach(function (genericObject) {
-    genericObject.position.x -= player.speed * 0.66; // Répéter l'arrière-plan lorsqu'il sort de l'écran à gauche
-
-    if (genericObject.position.x + genericObject.width <= 0) {
-      genericObject.position.x += genericObject.width;
-    }
-
     genericObject.draw();
   });
   plateforms.forEach(function (plateform) {
     plateform.draw();
   });
   enemies.forEach(function (enemy, index) {
-    enemy.update();
+    enemy.update(); // enemy stomp squish
 
     if (collisionTop({
       object1: player,
       object2: enemy
     })) {
+      for (var i = 0; i < 50; i++) {
+        particles.push(new Particle({
+          position: {
+            x: enemy.position.x + enemy.width / 2,
+            y: enemy.position.y + enemy.height / 2
+          },
+          velocity: {
+            x: (Math.random() - 0.5) * 7,
+            y: (Math.random() - 0.5) * 15
+          },
+          radius: Math.random() * 3
+        }));
+      }
+
       player.velocity.y -= 40;
       setTimeout(function () {
         enemies.splice(index, 1);
       }, 0);
     } else if (player.position.x + player.width >= enemy.position.x && player.position.y + player.height >= enemy.position.y && player.position.x <= enemy.position.x + enemy.width) init();
+  });
+  particles.forEach(function (particle) {
+    particle.update();
   });
   player.update();
 
@@ -1333,6 +1395,9 @@ function animate() {
       enemies.forEach(function (enemy) {
         enemy.position.x -= player.speed;
       });
+      particles.forEach(function (particle) {
+        particle.position.x -= player.speed;
+      });
     } else if (keys.left.pressed && scrollOffset > 0) {
       scrollOffset -= player.speed;
       plateforms.forEach(function (platform) {
@@ -1343,6 +1408,9 @@ function animate() {
       });
       enemies.forEach(function (enemy) {
         enemy.position.x += player.speed;
+      });
+      particles.forEach(function (particle) {
+        particle.position.x += player.speed;
       });
     }
   } // plateform collision
@@ -1355,8 +1423,20 @@ function animate() {
       platform: platform
     })) {
       player.velocity.y = 0;
-    }
+    } // particles bounce
 
+
+    particles.forEach(function (particle, index) {
+      if (isOnTopOfPlatformCircle({
+        object: particle,
+        platform: platform
+      })) {
+        particle.velocity.y = -particle.velocity.y * 0.9;
+        if (particle.radius - 0.4 < 0) particles.splice(index, 1);else particle.radius -= 0.4;
+      }
+
+      if (particle.ttl < 0) particles.splice(index, 1);
+    });
     enemies.forEach(function (enemy) {
       if (isOnTopOfPlatform({
         object: enemy,
@@ -1397,8 +1477,8 @@ function animate() {
 
 init();
 animate();
-addEventListener('keydown', function (_ref6) {
-  var keyCode = _ref6.keyCode;
+addEventListener('keydown', function (_ref8) {
+  var keyCode = _ref8.keyCode;
   console.log(keyCode);
 
   switch (keyCode) {
@@ -1426,8 +1506,8 @@ addEventListener('keydown', function (_ref6) {
 
   console.log(keys.right.pressed);
 });
-addEventListener('keyup', function (_ref7) {
-  var keyCode = _ref7.keyCode;
+addEventListener('keyup', function (_ref9) {
+  var keyCode = _ref9.keyCode;
   console.log(keyCode);
 
   switch (keyCode) {
