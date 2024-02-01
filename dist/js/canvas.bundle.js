@@ -871,6 +871,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/img/block.png":
+/*!***************************!*\
+  !*** ./src/img/block.png ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "fac88169424b827f4bbca82bd7a01a9f.png");
+
+/***/ }),
+
+/***/ "./src/img/blockTri.png":
+/*!******************************!*\
+  !*** ./src/img/blockTri.png ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "0f732b622c2a2a256940ec159c5a7941.png");
+
+/***/ }),
+
 /***/ "./src/img/pjump.png":
 /*!***************************!*\
   !*** ./src/img/pjump.png ***!
@@ -907,6 +933,84 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "a1de12fbeda5f4cadc1c0cec27c01014.png");
+
+/***/ }),
+
+/***/ "./src/img/spriteMarioJumpLeft.png":
+/*!*****************************************!*\
+  !*** ./src/img/spriteMarioJumpLeft.png ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "79a87181aec94b5e1d21942963ebe634.png");
+
+/***/ }),
+
+/***/ "./src/img/spriteMarioJumpRight.png":
+/*!******************************************!*\
+  !*** ./src/img/spriteMarioJumpRight.png ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "ffdd5958ac8fc0192de1a8855d128203.png");
+
+/***/ }),
+
+/***/ "./src/img/spriteMarioRunLeft.png":
+/*!****************************************!*\
+  !*** ./src/img/spriteMarioRunLeft.png ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "bd67564ba49a9b4944f1ac5c812adc9d.png");
+
+/***/ }),
+
+/***/ "./src/img/spriteMarioRunRight.png":
+/*!*****************************************!*\
+  !*** ./src/img/spriteMarioRunRight.png ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "0a0b6df309febe5e8b6c74c066c6a08e.png");
+
+/***/ }),
+
+/***/ "./src/img/spriteMarioStandLeft.png":
+/*!******************************************!*\
+  !*** ./src/img/spriteMarioStandLeft.png ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "5278df33f538bbd50783473847521409.png");
+
+/***/ }),
+
+/***/ "./src/img/spriteMarioStandRight.png":
+/*!*******************************************!*\
+  !*** ./src/img/spriteMarioStandRight.png ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "5a31f024f6d43f2604bafd029981127f.png");
 
 /***/ }),
 
@@ -971,16 +1075,25 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _img_plateform_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/plateform.png */ "./src/img/plateform.png");
-/* harmony import */ var _img_background_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/background.png */ "./src/img/background.png");
-/* harmony import */ var _img_pjump_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../img/pjump.png */ "./src/img/pjump.png");
-/* harmony import */ var _img_spriteRunLeft_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../img/spriteRunLeft.png */ "./src/img/spriteRunLeft.png");
-/* harmony import */ var _img_spriteRunRight_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../img/spriteRunRight.png */ "./src/img/spriteRunRight.png");
-/* harmony import */ var _img_spriteStandLeft_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../img/spriteStandLeft.png */ "./src/img/spriteStandLeft.png");
-/* harmony import */ var _img_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../img/spriteStandRight.png */ "./src/img/spriteStandRight.png");
-/* harmony import */ var _img_spriteGoomba_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../img/spriteGoomba.png */ "./src/img/spriteGoomba.png");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./src/js/utils.js");
+/* harmony import */ var _img_plateform_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/plateform.png */ "./src/img/plateform.png");
+/* harmony import */ var _img_background_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../img/background.png */ "./src/img/background.png");
+/* harmony import */ var _img_block_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../img/block.png */ "./src/img/block.png");
+/* harmony import */ var _img_blockTri_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../img/blockTri.png */ "./src/img/blockTri.png");
+/* harmony import */ var _img_pjump_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../img/pjump.png */ "./src/img/pjump.png");
+/* harmony import */ var _img_spriteRunLeft_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../img/spriteRunLeft.png */ "./src/img/spriteRunLeft.png");
+/* harmony import */ var _img_spriteRunRight_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../img/spriteRunRight.png */ "./src/img/spriteRunRight.png");
+/* harmony import */ var _img_spriteStandLeft_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../img/spriteStandLeft.png */ "./src/img/spriteStandLeft.png");
+/* harmony import */ var _img_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../img/spriteStandRight.png */ "./src/img/spriteStandRight.png");
+/* harmony import */ var _img_spriteGoomba_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../img/spriteGoomba.png */ "./src/img/spriteGoomba.png");
+/* harmony import */ var _img_spriteMarioRunLeft_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../img/spriteMarioRunLeft.png */ "./src/img/spriteMarioRunLeft.png");
+/* harmony import */ var _img_spriteMarioRunRight_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../img/spriteMarioRunRight.png */ "./src/img/spriteMarioRunRight.png");
+/* harmony import */ var _img_spriteMarioStandLeft_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../img/spriteMarioStandLeft.png */ "./src/img/spriteMarioStandLeft.png");
+/* harmony import */ var _img_spriteMarioStandRight_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../img/spriteMarioStandRight.png */ "./src/img/spriteMarioStandRight.png");
+/* harmony import */ var _img_spriteMarioJumpRight_png__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../img/spriteMarioJumpRight.png */ "./src/img/spriteMarioJumpRight.png");
+/* harmony import */ var _img_spriteMarioJumpLeft_png__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../img/spriteMarioJumpLeft.png */ "./src/img/spriteMarioJumpLeft.png");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_17__);
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -1000,13 +1113,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
+
+
+
+
+
+
+
+
 var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 window.addEventListener('resize', function () {
   canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight; // Ajoutez ici tout autre code que vous souhaitez exécuter lorsque la fenêtre est redimensionnée
+  canvas.height = window.innerHeight;
 });
 var gravity = 1.5;
 
@@ -1014,7 +1136,7 @@ var Player = /*#__PURE__*/function () {
   function Player() {
     _classCallCheck(this, Player);
 
-    this.speed = 7;
+    this.speed = 10;
     this.position = {
       x: 100,
       y: 100
@@ -1023,38 +1145,48 @@ var Player = /*#__PURE__*/function () {
       x: 0,
       y: 0
     };
-    this.width = 66;
-    this.height = 150;
-    this.image = createImage(_img_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_6__["default"]);
+    this.scale = 0.3;
+    this.width = 398 * this.scale;
+    this.height = 353 * this.scale;
+    this.image = Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_9__["default"]);
     this.frames = 0;
     this.sprites = {
       stand: {
-        right: createImage(_img_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_6__["default"]),
-        left: createImage(_img_spriteStandLeft_png__WEBPACK_IMPORTED_MODULE_5__["default"]),
-        cropWidth: 177,
-        width: 66
+        right: Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteMarioStandRight_png__WEBPACK_IMPORTED_MODULE_14__["default"]),
+        left: Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteMarioStandLeft_png__WEBPACK_IMPORTED_MODULE_13__["default"]),
+        cropWidth: 398,
+        width: 398 * this.scale
       },
       run: {
-        right: createImage(_img_spriteRunRight_png__WEBPACK_IMPORTED_MODULE_4__["default"]),
-        left: createImage(_img_spriteRunLeft_png__WEBPACK_IMPORTED_MODULE_3__["default"]),
-        cropWidth: 341,
-        width: 127.875
+        right: Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteMarioRunRight_png__WEBPACK_IMPORTED_MODULE_12__["default"]),
+        left: Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteMarioRunLeft_png__WEBPACK_IMPORTED_MODULE_11__["default"]),
+        cropWidth: 398,
+        width: 398 * this.scale
+      },
+      jump: {
+        right: Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteMarioJumpRight_png__WEBPACK_IMPORTED_MODULE_15__["default"]),
+        left: Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteMarioJumpLeft_png__WEBPACK_IMPORTED_MODULE_16__["default"]),
+        cropWidth: 398,
+        width: 398 * this.scale
       }
     };
     this.currentSprite = this.sprites.stand.right;
-    this.currentCropWidth = 177;
+    this.currentCropWidth = this.sprites.stand.cropWidth;
   }
 
   _createClass(Player, [{
     key: "draw",
     value: function draw() {
-      c.drawImage(this.currentSprite, this.currentCropWidth * this.frames, 0, this.currentCropWidth, 400, this.position.x, this.position.y, this.width, this.height);
+      //HitBox
+      //c.fillStyle = 'rgba(255, 0, 0, .2)'
+      //c.fillRect(this.position.x, this.position.y, this.width, this.height)
+      c.drawImage(this.currentSprite, this.currentCropWidth * this.frames, 0, this.currentCropWidth, 353, this.position.x, this.position.y, this.width, this.height);
     }
   }, {
     key: "update",
     value: function update() {
       this.frames++;
-      if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) this.frames = 0;else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left)) this.frames = 0;
+      if (this.frames > 58 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) this.frames = 0;else if (this.frames > 28 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left)) this.frames = 0;else if (this.currentSprite === this.sprites.jump.right || this.currentSprite === this.sprites.jump.left) this.frames = 0;
       this.draw();
       this.position.x += this.velocity.x;
       this.position.y += this.velocity.y;
@@ -1069,7 +1201,9 @@ var Plateform = /*#__PURE__*/function () {
   function Plateform(_ref) {
     var x = _ref.x,
         y = _ref.y,
-        image = _ref.image;
+        image = _ref.image,
+        block = _ref.block,
+        text = _ref.text;
 
     _classCallCheck(this, Plateform);
 
@@ -1077,15 +1211,32 @@ var Plateform = /*#__PURE__*/function () {
       x: x,
       y: y
     };
+    this.velocity = {
+      x: 0
+    };
     this.image = image;
     this.width = image.width;
     this.height = image.height; //TODO Faire les bonnes dimensions cube trop haut
+
+    this.block = block;
+    this.text = text;
   }
 
   _createClass(Plateform, [{
     key: "draw",
     value: function draw() {
       c.drawImage(this.image, this.position.x, this.position.y - (this.image.height - this.height));
+
+      if (this.text) {
+        c.fillStyle = 'red';
+        c.fillText(this.text, this.position.x, this.position.y);
+      }
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.draw();
+      this.position.x += this.velocity.x;
     }
   }]);
 
@@ -1104,6 +1255,9 @@ var GenericObject = /*#__PURE__*/function () {
       x: x,
       y: y
     };
+    this.velocity = {
+      x: 0
+    };
     this.image = image;
     this.width = image.width;
     this.height = image.height; //TODO Faire les bonnes dimensions cube trop haut
@@ -1113,6 +1267,12 @@ var GenericObject = /*#__PURE__*/function () {
     key: "draw",
     value: function draw() {
       c.drawImage(this.image, this.position.x, this.position.y);
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.draw();
+      this.position.x += this.velocity.x;
     }
   }]);
 
@@ -1141,7 +1301,7 @@ var Enemy = /*#__PURE__*/function () {
     };
     this.width = 43.33;
     this.height = 50;
-    this.image = createImage(_img_spriteGoomba_png__WEBPACK_IMPORTED_MODULE_7__["default"]);
+    this.image = Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_spriteGoomba_png__WEBPACK_IMPORTED_MODULE_10__["default"]);
     this.frames = 0;
     this.distance = distance;
   }
@@ -1161,7 +1321,7 @@ var Enemy = /*#__PURE__*/function () {
       this.draw();
       this.position.x += this.velocity.x;
       this.position.y += this.velocity.y;
-      if (this.position.y + this.height + this.velocity.y <= canvas.height) this.velocity.y += gravity; // walk the goomba back and forth
+      if (this.position.y + this.height + this.velocity.y <= canvas.height) this.velocity.y += gravity; // walk the enemy back and forth
 
       this.distance.traveled += Math.abs(this.velocity.x);
 
@@ -1169,8 +1329,6 @@ var Enemy = /*#__PURE__*/function () {
         this.distance.traveled = 0;
         this.velocity.x = -this.velocity.x;
       }
-
-      console.log(this.distance.traveled);
     }
   }]);
 
@@ -1220,25 +1378,9 @@ var Particle = /*#__PURE__*/function () {
   return Particle;
 }();
 
-function createImage(imageSrc) {
-  var image = new Image();
-  image.src = imageSrc;
-  return image;
-}
-
-function createImageAsync(imageSrc) {
-  return new Promise(function (resolve) {
-    var image = new Image();
-
-    image.onload = function () {
-      resolve(image);
-    };
-
-    image.src = imageSrc;
-  });
-}
-
-var plateformImage = createImageAsync(_img_plateform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var plateformImage = Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImageAsync"])(_img_plateform_png__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var test = Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImageAsync"])(_img_pjump_png__WEBPACK_IMPORTED_MODULE_5__["default"]);
+var blockTriImage;
 var player = new Player();
 var plateforms = [];
 var genericObjects = [];
@@ -1255,24 +1397,6 @@ var keys = {
 };
 var scrollOffset = 0;
 
-function isOnTopOfPlatform(_ref5) {
-  var object = _ref5.object,
-      platform = _ref5.platform;
-  return object.position.y + object.height <= platform.position.y && object.position.y + object.height + object.velocity.y >= platform.position.y && object.position.x + object.width >= platform.position.x && object.position.x <= platform.position.x + platform.width;
-}
-
-function collisionTop(_ref6) {
-  var object1 = _ref6.object1,
-      object2 = _ref6.object2;
-  return object1.position.y + object1.height <= object2.position.y && object1.position.y + object1.height + object1.velocity.y >= object2.position.y && object1.position.x + object1.width >= object2.position.x && object1.position.x <= object2.position.x + object2.width;
-}
-
-function isOnTopOfPlatformCircle(_ref7) {
-  var object = _ref7.object,
-      platform = _ref7.platform;
-  return object.position.y + object.radius <= platform.position.y && object.position.y + object.radius + object.velocity.y >= platform.position.y && object.position.x + object.radius >= platform.position.x && object.position.x <= platform.position.x + platform.width;
-}
-
 function init() {
   return _init.apply(this, arguments);
 }
@@ -1284,15 +1408,25 @@ function _init() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return createImageAsync(_img_plateform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
+            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImageAsync"])(_img_plateform_png__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
           case 2:
             plateformImage = _context.sent;
+            _context.next = 5;
+            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImageAsync"])(_img_pjump_png__WEBPACK_IMPORTED_MODULE_5__["default"]);
+
+          case 5:
+            test = _context.sent;
+            _context.next = 8;
+            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImageAsync"])(_img_blockTri_png__WEBPACK_IMPORTED_MODULE_4__["default"]);
+
+          case 8:
+            blockTriImage = _context.sent;
             player = new Player();
             enemies = [new Enemy({
               position: {
                 x: 800,
-                y: 100
+                y: 570
               },
               velocity: {
                 x: -0.3,
@@ -1304,8 +1438,8 @@ function _init() {
               }
             }), new Enemy({
               position: {
-                x: 900,
-                y: 100
+                x: 1500,
+                y: 570
               },
               velocity: {
                 x: -0.3,
@@ -1314,46 +1448,54 @@ function _init() {
             })];
             particles = [];
             plateforms = [new Plateform({
-              x: plateformImage.width * 4 + 300 + plateformImage.width,
-              y: 400,
-              image: createImage(_img_pjump_png__WEBPACK_IMPORTED_MODULE_2__["default"])
-            }), new Plateform({
               x: -1,
-              y: 615,
+              y: 620,
               image: plateformImage
             }), new Plateform({
-              x: plateformImage.width - 1,
-              y: 615,
+              x: plateformImage.width - 3,
+              y: 620,
               image: plateformImage
             }), new Plateform({
-              x: plateformImage.width - 1,
-              y: 615,
-              image: plateformImage
-            }), new Plateform({
-              x: plateformImage.width * 2 + 200,
-              y: 615,
-              image: plateformImage
-            }), new Plateform({
-              x: plateformImage.width * 3 + 300,
-              y: 615,
-              image: plateformImage
+              x: plateformImage.width * 3 + 100,
+              y: 620,
+              image: plateformImage,
+              text: 'here',
+              block: true
             }), new Plateform({
               x: plateformImage.width * 4 + 300,
-              y: 615,
+              y: 620,
+              image: plateformImage,
+              text: 'here',
+              block: true
+            }), new Plateform({
+              x: plateformImage.width * 5 + 300 - 2,
+              y: 620,
               image: plateformImage
             }), new Plateform({
-              x: plateformImage.width * 5 + 800,
-              y: 615,
-              image: plateformImage
+              x: plateformImage.width * 6 + 700 - 2,
+              y: 620,
+              image: plateformImage,
+              text: 'here',
+              block: true
+            }), new Plateform({
+              x: 850,
+              y: 370,
+              image: blockTriImage,
+              block: true
+            }), new Plateform({
+              x: 1090,
+              y: 250,
+              image: test,
+              block: true
             })];
             genericObjects = [new GenericObject({
               x: 0,
               y: 0,
-              image: createImage(_img_background_png__WEBPACK_IMPORTED_MODULE_1__["default"])
+              image: Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["createImage"])(_img_background_png__WEBPACK_IMPORTED_MODULE_2__["default"])
             })];
             scrollOffset = 0;
 
-          case 9:
+          case 15:
           case "end":
             return _context.stop();
         }
@@ -1368,15 +1510,17 @@ function animate() {
   c.fillStyle = 'wheat';
   c.fillRect(0, 0, canvas.width, canvas.height);
   genericObjects.forEach(function (genericObject) {
-    genericObject.draw();
+    genericObject.update();
+    genericObject.velocity.x = 0;
   });
   plateforms.forEach(function (plateform) {
-    plateform.draw();
+    plateform.update();
+    plateform.velocity.x = 0;
   });
   enemies.forEach(function (enemy, index) {
     enemy.update(); // enemy stomp squish
 
-    if (collisionTop({
+    if (Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["collisionTop"])({
       object1: player,
       object2: enemy
     })) {
@@ -1404,6 +1548,7 @@ function animate() {
     particle.update();
   });
   player.update();
+  var hitSide = false;
 
   if (keys.right.pressed && player.position.x < 400) {
     player.velocity.x = player.speed;
@@ -1413,51 +1558,95 @@ function animate() {
     player.velocity.x = 0;
 
     if (keys.right.pressed) {
-      scrollOffset += player.speed;
-      plateforms.forEach(function (platform) {
-        platform.position.x -= player.speed;
-      });
-      genericObjects.forEach(function (genericObject) {
-        genericObject.position.x -= player.speed * 0.66;
-      });
-      enemies.forEach(function (enemy) {
-        enemy.position.x -= player.speed;
-      });
-      particles.forEach(function (particle) {
-        particle.position.x -= player.speed;
-      });
+      for (var i = 0; i < plateforms.length; i++) {
+        var _plateform = plateforms[i];
+        _plateform.velocity.x = -player.speed;
+
+        if (_plateform.block && Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["hitSideOfPlatform"])({
+          object: player,
+          plateform: _plateform
+        })) {
+          plateforms.forEach(function (plateform) {
+            plateform.velocity.x = 0;
+          });
+          hitSide = true;
+          break;
+        }
+      }
+
+      if (!hitSide) {
+        scrollOffset += player.speed;
+        genericObjects.forEach(function (genericObject) {
+          genericObject.velocity.x = -player.speed * 0.66;
+        });
+        enemies.forEach(function (enemy) {
+          enemy.position.x -= player.speed;
+        });
+        particles.forEach(function (particle) {
+          particle.position.x -= player.speed;
+        });
+      }
     } else if (keys.left.pressed && scrollOffset > 0) {
-      scrollOffset -= player.speed;
-      plateforms.forEach(function (platform) {
-        platform.position.x += player.speed;
-      });
-      genericObjects.forEach(function (genericObject) {
-        genericObject.position.x += player.speed * 0.66;
-      });
-      enemies.forEach(function (enemy) {
-        enemy.position.x += player.speed;
-      });
-      particles.forEach(function (particle) {
-        particle.position.x += player.speed;
-      });
+      for (var _i = 0; _i < plateforms.length; _i++) {
+        var _plateform2 = plateforms[_i];
+        _plateform2.velocity.x = player.speed;
+
+        if (_plateform2.block && Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["hitSideOfPlatform"])({
+          object: player,
+          plateform: _plateform2
+        })) {
+          plateforms.forEach(function (plateform) {
+            plateform.velocity.x = 0;
+          });
+          hitSide = true;
+          break;
+        }
+      }
+
+      if (!hitSide) {
+        scrollOffset -= player.speed;
+        genericObjects.forEach(function (genericObject) {
+          genericObject.velocity.x = player.speed * 0.66;
+        });
+        enemies.forEach(function (enemy) {
+          enemy.position.x += player.speed;
+        });
+        particles.forEach(function (particle) {
+          particle.position.x += player.speed;
+        });
+      }
     }
   } // plateform collision
-  // platform collision detection
+  // plateform collision detection
 
 
-  plateforms.forEach(function (platform) {
-    if (isOnTopOfPlatform({
+  plateforms.forEach(function (plateform) {
+    if (Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["isOnTopOfPlatform"])({
       object: player,
-      platform: platform
+      plateform: plateform
     })) {
       player.velocity.y = 0;
+    }
+
+    if (plateform.block && Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["hitBottomOfPlatform"])({
+      object: player,
+      plateform: plateform
+    })) {
+      player.velocity.y = -player.velocity.y;
+    }
+
+    if (plateform.block && Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["hitSideOfPlatform"])({
+      object: player,
+      plateform: plateform
+    })) {
+      player.velocity.x = 0;
     } // particles bounce
 
 
     particles.forEach(function (particle, index) {
-      if (isOnTopOfPlatformCircle({
+      if (Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["isOnTopOfPlatformCircle"])({
         object: particle,
-        platform: platform
+        plateform: plateform
       })) {
         particle.velocity.y = -particle.velocity.y * 0.9;
         if (particle.radius - 0.4 < 0) particles.splice(index, 1);else particle.radius -= 0.4;
@@ -1466,30 +1655,32 @@ function animate() {
       if (particle.ttl < 0) particles.splice(index, 1);
     });
     enemies.forEach(function (enemy) {
-      if (isOnTopOfPlatform({
+      if (Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__["isOnTopOfPlatform"])({
         object: enemy,
-        platform: platform
+        plateform: plateform
       })) enemy.velocity.y = 0;
     });
   }); // sprite switching
 
-  if (keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.run.right) {
-    player.frames = 1;
-    player.currentSprite = player.sprites.run.right;
-    player.currentCropWidth = player.sprites.run.cropWidth;
-    player.width = player.sprites.run.width;
-  } else if (keys.left.pressed && lastKey === 'left' && player.currentSprite !== player.sprites.run.left) {
-    player.currentSprite = player.sprites.run.left;
-    player.currentCropWidth = player.sprites.run.cropWidth;
-    player.width = player.sprites.run.width;
-  } else if (!keys.left.pressed && lastKey === 'left' && player.currentSprite !== player.sprites.stand.left) {
-    player.currentSprite = player.sprites.stand.left;
-    player.currentCropWidth = player.sprites.stand.cropWidth;
-    player.width = player.sprites.stand.width;
-  } else if (!keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.stand.right) {
-    player.currentSprite = player.sprites.stand.right;
-    player.currentCropWidth = player.sprites.stand.cropWidth;
-    player.width = player.sprites.stand.width;
+  if (player.velocity.y === 0) {
+    if (keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.run.right) {
+      player.frames = 1;
+      player.currentSprite = player.sprites.run.right;
+      player.currentCropWidth = player.sprites.run.cropWidth;
+      player.width = player.sprites.run.width;
+    } else if (keys.left.pressed && lastKey === 'left' && player.currentSprite !== player.sprites.run.left) {
+      player.currentSprite = player.sprites.run.left;
+      player.currentCropWidth = player.sprites.run.cropWidth;
+      player.width = player.sprites.run.width;
+    } else if (!keys.left.pressed && lastKey === 'left' && player.currentSprite !== player.sprites.stand.left) {
+      player.currentSprite = player.sprites.stand.left;
+      player.currentCropWidth = player.sprites.stand.cropWidth;
+      player.width = player.sprites.stand.width;
+    } else if (!keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.stand.right) {
+      player.currentSprite = player.sprites.stand.right;
+      player.currentCropWidth = player.sprites.stand.cropWidth;
+      player.width = player.sprites.stand.width;
+    }
   } // Win condition
 
 
@@ -1505,8 +1696,8 @@ function animate() {
 
 init();
 animate();
-addEventListener('keydown', function (_ref8) {
-  var keyCode = _ref8.keyCode;
+addEventListener('keydown', function (_ref5) {
+  var keyCode = _ref5.keyCode;
   console.log(keyCode);
 
   switch (keyCode) {
@@ -1529,13 +1720,14 @@ addEventListener('keydown', function (_ref8) {
     case 90:
       console.log('up');
       player.velocity.y -= 25;
+      if (lastKey === 'right') player.currentSprite = player.sprites.jump.right;else player.currentSprite = player.sprites.jump.left;
       break;
   }
 
   console.log(keys.right.pressed);
 });
-addEventListener('keyup', function (_ref9) {
-  var keyCode = _ref9.keyCode;
+addEventListener('keyup', function (_ref6) {
+  var keyCode = _ref6.keyCode;
   console.log(keyCode);
 
   switch (keyCode) {
@@ -1560,6 +1752,80 @@ addEventListener('keyup', function (_ref9) {
 
   console.log(keys.right.pressed);
 });
+
+/***/ }),
+
+/***/ "./src/js/utils.js":
+/*!*************************!*\
+  !*** ./src/js/utils.js ***!
+  \*************************/
+/*! exports provided: createImage, createImageAsync, isOnTopOfPlatform, collisionTop, isOnTopOfPlatformCircle, hitBottomOfPlatform, hitSideOfPlatform */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createImage", function() { return createImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createImageAsync", function() { return createImageAsync; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isOnTopOfPlatform", function() { return isOnTopOfPlatform; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "collisionTop", function() { return collisionTop; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isOnTopOfPlatformCircle", function() { return isOnTopOfPlatformCircle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hitBottomOfPlatform", function() { return hitBottomOfPlatform; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hitSideOfPlatform", function() { return hitSideOfPlatform; });
+function randomIntFromRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function randomColor(colors) {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function distance(x1, y1, x2, y2) {
+  var xDist = x2 - x1;
+  var yDist = y2 - y1;
+  return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
+}
+
+function createImage(imageSrc) {
+  var image = new Image();
+  image.src = imageSrc;
+  return image;
+}
+function createImageAsync(imageSrc) {
+  return new Promise(function (resolve) {
+    var image = new Image();
+
+    image.onload = function () {
+      resolve(image);
+    };
+
+    image.src = imageSrc;
+  });
+}
+function isOnTopOfPlatform(_ref) {
+  var object = _ref.object,
+      plateform = _ref.plateform;
+  return object.position.y + object.height <= plateform.position.y && object.position.y + object.height + object.velocity.y >= plateform.position.y && object.position.x + object.width >= plateform.position.x && object.position.x <= plateform.position.x + plateform.width;
+}
+function collisionTop(_ref2) {
+  var object1 = _ref2.object1,
+      object2 = _ref2.object2;
+  return object1.position.y + object1.height <= object2.position.y && object1.position.y + object1.height + object1.velocity.y >= object2.position.y && object1.position.x + object1.width >= object2.position.x && object1.position.x <= object2.position.x + object2.width;
+}
+function isOnTopOfPlatformCircle(_ref3) {
+  var object = _ref3.object,
+      plateform = _ref3.plateform;
+  return object.position.y + object.radius <= plateform.position.y && object.position.y + object.radius + object.velocity.y >= plateform.position.y && object.position.x + object.radius >= plateform.position.x && object.position.x <= plateform.position.x + plateform.width;
+}
+function hitBottomOfPlatform(_ref4) {
+  var object = _ref4.object,
+      plateform = _ref4.plateform;
+  return object.position.y <= plateform.position.y + plateform.height && object.position.y - object.velocity.y >= plateform.position.y + plateform.height && object.position.x + object.width >= plateform.position.x && object.position.x <= plateform.position.x + plateform.width;
+}
+function hitSideOfPlatform(_ref5) {
+  var object = _ref5.object,
+      plateform = _ref5.plateform;
+  return object.position.x + object.width + object.velocity.x - plateform.velocity.x >= plateform.position.x && object.position.x + object.velocity.x <= plateform.position.x + plateform.width && object.position.y <= plateform.position.y + plateform.height && object.position.y + object.height >= plateform.position.y;
+}
 
 /***/ })
 

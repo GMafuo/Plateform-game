@@ -1,5 +1,17 @@
+import {
+  createImage,
+  createImageAsync,
+  isOnTopOfPlatform,
+  collisionTop,
+  isOnTopOfPlatformCircle,
+  hitBottomOfPlatform,
+  hitSideOfPlatform
+} from './utils.js'
+
 import plateform from '../img/plateform.png'
 import background from '../img/background.png'
+import block from '../img/block.png'
+import blockTri from '../img/blockTri.png'
 import pjump from '../img/pjump.png'
 
 import spriteRunLeft from '../img/spriteRunLeft.png'
@@ -7,6 +19,13 @@ import spriteRunRight from '../img/spriteRunRight.png'
 import spriteStandLeft from '../img/spriteStandLeft.png'
 import spriteStandRight from '../img/spriteStandRight.png'
 import spriteEnemy from '../img/spriteGoomba.png'
+
+import spriteMarioRunLeft from '../img/spriteMarioRunLeft.png'
+import spriteMarioRunRight from '../img/spriteMarioRunRight.png'
+import spriteMarioStandLeft from '../img/spriteMarioStandLeft.png'
+import spriteMarioStandRight from '../img/spriteMarioStandRight.png'
+import spriteMarioJumpRight from '../img/spriteMarioJumpRight.png'
+import spriteMarioJumpLeft from '../img/spriteMarioJumpLeft.png'
 
 import 'regenerator-runtime/runtime';
 
@@ -20,14 +39,13 @@ window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Ajoutez ici tout autre code que vous souhaitez exécuter lorsque la fenêtre est redimensionnée
 });
 
 const gravity = 1.5
 
 class Player {
     constructor() {
-        this.speed = 7
+        this.speed = 10
         this.position = {
             x: 100,
             y: 100
@@ -36,37 +54,47 @@ class Player {
             x: 0,
             y: 0
         }
-        this.width = 66
-        this.height = 150
+        this.scale = 0.3
+        this.width = 398 * this.scale
+        this.height = 353 * this.scale
 
         this.image = createImage(spriteStandRight)
         this.frames = 0
         this.sprites = {
             stand: {
-                right: createImage(spriteStandRight),
-                left: createImage(spriteStandLeft),
-                cropWidth: 177,
-                width: 66
+                right: createImage(spriteMarioStandRight),
+                left: createImage(spriteMarioStandLeft),
+                cropWidth: 398,
+                width: 398 * this.scale
             },
             run: {
-                right: createImage(spriteRunRight),
-                left: createImage(spriteRunLeft),
-                cropWidth: 341,
-                width: 127.875
+                right: createImage(spriteMarioRunRight),
+                left: createImage(spriteMarioRunLeft),
+                cropWidth: 398,
+                width: 398 * this.scale
+            },
+            jump: {
+              right: createImage(spriteMarioJumpRight),
+              left: createImage(spriteMarioJumpLeft),
+              cropWidth: 398,
+              width: 398 * this.scale
             }
         }
 
         this.currentSprite = this.sprites.stand.right
-        this.currentCropWidth = 177
+        this.currentCropWidth = this.sprites.stand.cropWidth
     }
 
     draw() {
+      //HitBox
+      //c.fillStyle = 'rgba(255, 0, 0, .2)'
+      //c.fillRect(this.position.x, this.position.y, this.width, this.height)
         c.drawImage(
             this.currentSprite, 
             this.currentCropWidth * this.frames,
             0,
             this.currentCropWidth,
-            400,
+            353,
             this.position.x, 
             this.position.y, 
             this.width, 
@@ -78,15 +106,20 @@ class Player {
         this.frames++
     
         if (
-          this.frames > 59 &&
+          this.frames > 58 &&
           (this.currentSprite === this.sprites.stand.right ||
             this.currentSprite === this.sprites.stand.left)
         )
           this.frames = 0
         else if (
-          this.frames > 29 &&
+          this.frames > 28 &&
           (this.currentSprite === this.sprites.run.right ||
             this.currentSprite === this.sprites.run.left)
+        )
+          this.frames = 0
+        else if (
+          this.currentSprite === this.sprites.jump.right ||
+          this.currentSprite === this.sprites.jump.left
         )
           this.frames = 0
     
@@ -100,19 +133,35 @@ class Player {
     }
 
 class Plateform {
-    constructor({ x, y, image }) {
+  constructor({ x, y, image, block, text }) {
         this.position = {
             x,
             y
         }
 
+        this.velocity = {
+          x: 0
+        }
+
         this.image = image
         this.width = image.width 
         this.height = image.height //TODO Faire les bonnes dimensions cube trop haut
+        this.block = block
+        this.text = text
     }
 
     draw() {
         c.drawImage(this.image, this.position.x, this.position.y - (this.image.height - this.height));
+
+        if (this.text) {
+          c.fillStyle = 'red'
+          c.fillText(this.text, this.position.x, this.position.y)
+        }
+      }
+    
+      update() {
+        this.draw()
+        this.position.x += this.velocity.x
     }
 }
 
@@ -123,6 +172,10 @@ class GenericObject {
             y
         }
 
+        this.velocity = {
+          x: 0
+        }
+
         this.image = image
         this.width = image.width 
         this.height = image.height //TODO Faire les bonnes dimensions cube trop haut
@@ -131,6 +184,11 @@ class GenericObject {
     draw() {
         c.drawImage(this.image, this.position.x, this.position.y)
     }
+
+    update() {
+      this.draw()
+      this.position.x += this.velocity.x
+    } 
 }
 
 class Enemy {
@@ -187,14 +245,13 @@ class Enemy {
       if (this.position.y + this.height + this.velocity.y <= canvas.height)
         this.velocity.y += gravity
 
-      // walk the goomba back and forth
+      // walk the enemy back and forth
       this.distance.traveled += Math.abs(this.velocity.x)
 
       if (this.distance.traveled > this.distance.limit) {
         this.distance.traveled = 0
         this.velocity.x = -this.velocity.x
       }
-      console.log(this.distance.traveled)
     }
   }
 
@@ -232,23 +289,10 @@ class Enemy {
         this.velocity.y += gravity * 0.4
     }
   }
-function createImage(imageSrc) {
-    const image = new Image()
-    image.src = imageSrc
-    return image
-  }
-
-function createImageAsync(imageSrc) {
-    return new Promise((resolve) => {
-      const image = new Image()
-      image.onload = () => {
-        resolve(image)
-      }
-      image.src = imageSrc
-    })
-  }
 
 let plateformImage = createImageAsync(plateform)
+let test = createImageAsync(pjump)
+let blockTriImage
 
 let player = new Player()
 let plateforms = []
@@ -268,45 +312,17 @@ const keys = {
 
 let scrollOffset = 0
 
-function isOnTopOfPlatform({ object, platform }) {
-    return (
-      object.position.y + object.height <= platform.position.y &&
-      object.position.y + object.height + object.velocity.y >=
-        platform.position.y &&
-      object.position.x + object.width >= platform.position.x &&
-      object.position.x <= platform.position.x + platform.width
-    )
-  }
-  
-  function collisionTop({ object1, object2 }) {
-    return (
-      object1.position.y + object1.height <= object2.position.y &&
-      object1.position.y + object1.height + object1.velocity.y >=
-        object2.position.y &&
-      object1.position.x + object1.width >= object2.position.x &&
-      object1.position.x <= object2.position.x + object2.width
-    )
-  }
-
-  function isOnTopOfPlatformCircle({ object, platform }) {
-    return (
-      object.position.y + object.radius <= platform.position.y &&
-      object.position.y + object.radius + object.velocity.y >=
-        platform.position.y &&
-      object.position.x + object.radius >= platform.position.x &&
-      object.position.x <= platform.position.x + platform.width
-    )
-  }
-
 async function init() {
     plateformImage = await createImageAsync(plateform)
+    test = await createImageAsync(pjump)
+    blockTriImage = await createImageAsync(blockTri)
 
     player = new Player()
     enemies = [
         new Enemy({
           position: {
             x: 800,
-            y: 100
+            y: 570
           },
           velocity: {
             x: -0.3,
@@ -319,8 +335,8 @@ async function init() {
         }),
         new Enemy({
           position: {
-            x: 900,
-            y: 100
+            x: 1500,
+            y: 570
           },
           velocity: {
             x: -0.3,
@@ -330,30 +346,50 @@ async function init() {
       ]
     particles = []
     plateforms = [
-        new Plateform({
-            x: plateformImage.width * 4 + 300 + plateformImage.width, y: 400, image: createImage(pjump)
-        }),
-        new Plateform({
-            x: -1, y: 615, image: plateformImage
-        }), 
-        new Plateform({
-            x: plateformImage.width - 1, y: 615, image: plateformImage
-        }),
-        new Plateform({
-            x: plateformImage.width - 1, y: 615, image: plateformImage
-        }),
-        new Plateform({
-            x: plateformImage.width * 2 + 200, y: 615, image: plateformImage
-        }),
-        new Plateform({
-            x: plateformImage.width * 3 + 300, y: 615, image: plateformImage
-        }),
-        new Plateform({
-            x: plateformImage.width * 4 + 300, y: 615, image: plateformImage
-        }),
-        new Plateform({
-            x: plateformImage.width * 5 + 800, y: 615, image: plateformImage
-        }),
+      new Plateform({
+        x: -1,
+        y: 620,
+        image: plateformImage
+      }),
+      new Plateform({ x: plateformImage.width - 3, y: 620, image: plateformImage }),
+      new Plateform({
+        x: plateformImage.width * 3 + 100,
+        y: 620,
+        image: plateformImage,
+        text: 'here', 
+        block: true
+      }),
+      new Plateform({
+        x: plateformImage.width * 4 + 300,
+        y: 620,
+        image: plateformImage,
+        text: 'here',
+        block: true
+      }),
+      new Plateform({
+        x: plateformImage.width * 5 + 300 - 2,
+        y: 620,
+        image: plateformImage
+      }),
+      new Plateform({
+        x: plateformImage.width * 6 + 700 - 2,
+        y: 620,
+        image: plateformImage,
+        text: 'here',
+        block: true
+      }),
+      new Plateform({
+        x: 850,
+        y: 370,
+        image: blockTriImage,
+        block: true
+      }),
+      new Plateform({
+        x: 1090,
+        y: 250,
+        image: test,
+        block: true
+      }),
     ]
     genericObjects = [
         new GenericObject({
@@ -373,11 +409,13 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height)
 
     genericObjects.forEach(genericObject => {
-        genericObject.draw()
+      genericObject.update()
+      genericObject.velocity.x = 0
     })
 
     plateforms.forEach(plateform => {
-        plateform.draw()
+      plateform.update()
+      plateform.velocity.x = 0
     })
 
     enemies.forEach((enemy, index) => {
@@ -422,6 +460,7 @@ function animate() {
       })
     player.update()
 
+    let hitSide = false
 
     if (keys.right.pressed && player.position.x < 400) {
         player.velocity.x = player.speed
@@ -433,49 +472,107 @@ function animate() {
         player.velocity.x = 0
 
         if (keys.right.pressed) {
+          for (let i = 0; i < plateforms.length; i++) {
+            const plateform = plateforms[i]
+            plateform.velocity.x = -player.speed
+    
+            if (
+              plateform.block &&
+              hitSideOfPlatform({
+                object: player,
+                plateform
+              })
+            ) {
+              plateforms.forEach((plateform) => {
+                plateform.velocity.x = 0
+              })
+              hitSide = true
+              break
+            }
+          }
+
+          if (!hitSide) {
             scrollOffset += player.speed
-            plateforms.forEach((platform) => {
-              platform.position.x -= player.speed
-            })
+    
             genericObjects.forEach((genericObject) => {
-              genericObject.position.x -= player.speed * 0.66
+              genericObject.velocity.x = -player.speed * 0.66
             })
+    
             enemies.forEach((enemy) => {
-                enemy.position.x -= player.speed
+              enemy.position.x -= player.speed
             })
+    
             particles.forEach((particle) => {
               particle.position.x -= player.speed
             })
+          }
           } else if (keys.left.pressed && scrollOffset > 0) {
-            scrollOffset -= player.speed
+            for (let i = 0; i < plateforms.length; i++) {
+              const plateform = plateforms[i]
+              plateform.velocity.x = player.speed
       
-            plateforms.forEach((platform) => {
-              platform.position.x += player.speed
-            })
+              if (
+                plateform.block &&
+                hitSideOfPlatform({
+                  object: player,
+                  plateform
+                })
+              ) {
+                plateforms.forEach((plateform) => {
+                  plateform.velocity.x = 0
+                })
       
-            genericObjects.forEach((genericObject) => {
-              genericObject.position.x += player.speed * 0.66
-            })
+                hitSide = true
+                break
+              }
+            }
+      
+            if (!hitSide) {
+              scrollOffset -= player.speed
+              genericObjects.forEach((genericObject) => {
+                genericObject.velocity.x = player.speed * 0.66
+              })
 
-            enemies.forEach((enemy) => {
+              enemies .forEach((enemy) => {
                 enemy.position.x += player.speed
-            })
-            particles.forEach((particle) => {
-              particle.position.x += player.speed
-            })
+              })
+              particles.forEach((particle) => {
+                particle.position.x += player.speed
+              })
+            }
         }
     }
 
     // plateform collision
-    // platform collision detection
-  plateforms.forEach((platform) => {
+    // plateform collision detection
+  plateforms.forEach((plateform) => {
     if (
       isOnTopOfPlatform({
         object: player,
-        platform
+        plateform
       })
     ) {
       player.velocity.y = 0
+    }
+
+    if (
+      plateform.block &&
+      hitBottomOfPlatform({
+        object: player,
+        plateform
+      })
+    ) {
+      player.velocity.y = -player.velocity.y
+    }
+
+    if (
+      plateform.block &&
+      hitSideOfPlatform({
+        object: player,
+        plateform
+      })
+    ) {
+      player.velocity.x = 0
     }
 
     // particles bounce
@@ -483,7 +580,7 @@ function animate() {
       if (
         isOnTopOfPlatformCircle({
           object: particle,
-          platform
+          plateform
         })
       ) {
         particle.velocity.y = -particle.velocity.y * 0.9
@@ -499,7 +596,7 @@ function animate() {
       if (
         isOnTopOfPlatform({
           object: enemy,
-          platform
+          plateform
         })
       )
         enemy.velocity.y = 0
@@ -508,31 +605,41 @@ function animate() {
 
     // sprite switching
 
-    if (
-        keys.right.pressed && 
-        lastKey === 'right' && player.currentSprite !== player.sprites.run.right) {
+    if (player.velocity.y === 0) {
+      if (
+        keys.right.pressed &&
+        lastKey === 'right' &&
+        player.currentSprite !== player.sprites.run.right
+      ) {
         player.frames = 1
         player.currentSprite = player.sprites.run.right
         player.currentCropWidth = player.sprites.run.cropWidth
         player.width = player.sprites.run.width
-    } else if (
-        keys.left.pressed && 
-        lastKey === 'left' && player.currentSprite !== player.sprites.run.left) {
+      } else if (
+        keys.left.pressed &&
+        lastKey === 'left' &&
+        player.currentSprite !== player.sprites.run.left
+      ) {
         player.currentSprite = player.sprites.run.left
         player.currentCropWidth = player.sprites.run.cropWidth
         player.width = player.sprites.run.width
-    } else if (
-        !keys.left.pressed && 
-        lastKey === 'left' && player.currentSprite !== player.sprites.stand.left) {
+      } else if (
+        !keys.left.pressed &&
+        lastKey === 'left' &&
+        player.currentSprite !== player.sprites.stand.left
+      ) {
         player.currentSprite = player.sprites.stand.left
         player.currentCropWidth = player.sprites.stand.cropWidth
         player.width = player.sprites.stand.width
-    } else if (
-        !keys.right.pressed && 
-        lastKey === 'right' && player.currentSprite !== player.sprites.stand.right) {
+      } else if (
+        !keys.right.pressed &&
+        lastKey === 'right' &&
+        player.currentSprite !== player.sprites.stand.right
+      ) {
         player.currentSprite = player.sprites.stand.right
         player.currentCropWidth = player.sprites.stand.cropWidth
         player.width = player.sprites.stand.width
+      }
     }
 
     // Win condition
@@ -571,6 +678,10 @@ addEventListener('keydown', ({ keyCode }) => {
         case 90:
             console.log('up')
             player.velocity.y -= 25
+
+            if (lastKey === 'right') player.currentSprite = player.sprites.jump.right
+            else player.currentSprite = player.sprites.jump.left
+
             break
     }
 
