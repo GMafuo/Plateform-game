@@ -43,6 +43,8 @@ import spriteFireFlowerJumpLeft from '../img/spriteFireFlowerJumpLeft.png'
 
 import spriteFireFlower from '../img/spriteFireFlower.png'
 
+import { audio } from './audio.js'
+
 import 'regenerator-runtime/runtime';
 
 const canvas = document.querySelector('canvas')
@@ -348,7 +350,8 @@ class Enemy {
       velocity,
       radius,
       color = '#654428',
-      fireball = false
+      fireball = false,
+      fades = false
     }) {
       this.position = {
         x: position.x,
@@ -364,14 +367,19 @@ class Enemy {
       this.ttl = 300
       this.color = color
       this.fireball = fireball
+      this.opacity = 1
+      this.fades = fades
     }
   
     draw() {
+      c.save()
+      c.globalAlpha = this.opacity
       c.beginPath()
       c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false)
       c.fillStyle = this.color
       c.fill()
       c.closePath()
+      c.restore
     }
   
     update() {
@@ -382,6 +390,11 @@ class Enemy {
   
       if (this.position.y + this.radius + this.velocity.y <= canvas.height)
         this.velocity.y += gravity * 0.4
+      if (this.fades && this.opacity > 0) {
+        this.opacity -= 0.01
+      }
+
+      if (this.opacity < 0) this.opacity = 0
     }
   }
 
@@ -732,6 +745,19 @@ function animate() {
       genericObject.velocity.x = 0
     })
 
+    particles.forEach((particle, i) => {
+      particle.update()
+  
+      if (
+        particle.fireball &&
+        (particle.position.x - particle.radius >= canvas.width ||
+          particle.position.x + particle.radius <= 0)
+      )
+        setTimeout(() => {
+          particles.splice(i, 1)
+        }, 0)
+    })
+
     plateforms.forEach(plateform => {
       plateform.update()
       plateform.velocity.x = 0
@@ -743,6 +769,7 @@ function animate() {
   
       // mario touches flagpole
       // win condition
+      // complete level
       if (
         !game.disableUserInput &&
         objectsTouch({
@@ -750,6 +777,8 @@ function animate() {
           object2: flagPole
         })
       ) {
+        audio.completeLevel.play()
+        audio.musicLevel1.stop()
         game.disableUserInput = true
         player.velocity.x = 0
         player.velocity.y = 0
@@ -759,7 +788,11 @@ function animate() {
   
         if (player.powerUps.fireFlower)
           player.currentSprite = player.sprites.stand.fireFlower.right
-  
+
+        // flagpole slide
+        setTimeout(() => {
+          audio.descend.play()
+        }, 200)
         gsap.to(player.position, {
           y: canvas.height - lgPlateformImage.height - player.height,
           duration: 1,
@@ -777,6 +810,39 @@ function animate() {
           duration: 2,
           ease: 'power1.in'
         })
+
+        // fireworks
+      const particleCount = 300
+      const radians = (Math.PI * 2) / particleCount
+      const power = 8
+      let increment = 1
+
+      const intervalId = setInterval(() => {
+        for (let i = 0; i < particleCount; i++) {
+          particles.push(
+            new Particle({
+              position: {
+                x: (canvas.width / 4) * increment,
+                y: canvas.height / 2
+              },
+              velocity: {
+                x: Math.cos(radians * i) * power * Math.random(),
+                y: Math.sin(radians * i) * power * Math.random()
+              },
+              radius: 3 * Math.random(),
+              color: `hsl(${Math.random() * 200}, 50%, 50%)`,
+              fades: true
+            })
+          )
+        }
+
+        audio.fireworkBurst.play()
+        audio.fireworkWhistle.play()
+
+        if (increment === 3) clearInterval(intervalId)
+
+        increment++
+      }, 1000)
       }
     }
 
@@ -816,13 +882,15 @@ function animate() {
       }
     })
 
-        // enemy stomp squish
+        // goomba stomp squish / squash
         if (
           collisionTop({
             object1: player,
             object2: enemy
           })
         ) {
+          audio.goombaSquash.play()
+
           for (let i = 0; i < 50; i++) {
             particles.push(
               new Particle({
@@ -847,31 +915,23 @@ function animate() {
           player.position.y + player.height >= enemy.position.y &&
           player.position.x <= enemy.position.x + enemy.width
           ) {
+
             // player hits enemy
+            // lose fireflower / lose powerup
             if (player.powerUps.fireFlower) {
               player.invincible = true
               player.powerUps.fireFlower = false
+              audio.losePowerUp.play()
       
               setTimeout(() => {
                 player.invincible = false
               }, 1000)
-            } else if (!player.invincible) init()
+             } else if (!player.invincible) {
+              audio.die.play()
+              init()
+            }
           }
       })
-
-      particles.forEach((particle, i) => {
-        particle.update()
-
-        if (
-          particle.fireball &&
-          (particle.position.x - particle.radius >= canvas.width ||
-            particle.position.x + particle.radius <= 0)
-        )
-          setTimeout(() => {
-            particles.splice(i, 1)
-          }, 0)
-      })
-      console.log(particles)
       player.update()
 
     if (game.disableUserInput) return
@@ -1061,6 +1121,7 @@ function animate() {
 
     //Lose condition
     if(player.position.y > canvas.height) {
+        audio.die.play()
         init()
     }
 
@@ -1149,6 +1210,8 @@ addEventListener('keydown', ({ keyCode }) => {
             console.log('up')
             player.velocity.y -= 25
 
+            audio.jump.play()
+
             if (lastKey === 'right') player.currentSprite = player.sprites.jump.right
             else player.currentSprite = player.sprites.jump.left
             if (!player.powerUps.fireFlower) break
@@ -1163,6 +1226,8 @@ addEventListener('keydown', ({ keyCode }) => {
       console.log('space')
 
       if (!player.powerUps.fireFlower) return
+
+      audio.fireFlowerShot.play()
 
       let velocity = 15
       if (lastKey === 'left') velocity = -velocity
