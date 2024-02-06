@@ -9,8 +9,8 @@ import audioGameOver from '../audio/audioGameOver.mp3'
 import audioJump from '../audio/audioJump.mp3'
 import audioLosePowerUp from '../audio/audioLosePowerUp.mp3'
 import audioMusicLevel1 from '../audio/audioMusicLevel1.mp3'
-import audioWinLevel from '../audio/audioWinLevel.mp3'
-import audioGoombaSquash from '../audio/audioGoombaSquash.mp3'
+import audioObtainPowerUp from '../audio/audioWinLevel.mp3'
+import audioEnemySquash from '../audio/audioEnemySquash.mp3'
 
 export const audio = {
   completeLevel: new Howl({
@@ -56,12 +56,12 @@ export const audio = {
     loop: true,
     autoplay: true
   }),
-  winLevel: new Howl({
-    src: [audioWinLevel],
+  obtainPowerUp: new Howl({
+    src: [audioObtainPowerUp],
     volume: 0.1
   }),
-  goombaSquash: new Howl({
-    src: [audioGoombaSquash],
+  enemySquash: new Howl({
+    src: [audioEnemySquash],
     volume: 0.1
   })
 }
