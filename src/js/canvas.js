@@ -11,7 +11,7 @@ import {
 } from './utils.js'
 
 import platform from '../img/platform.png'
-import background from '../img/background.png'
+import background from '../img/pre.png'
 import platformSmallTall from '../img/platformSmallTall.png'
 import block from '../img/block.png'
 import blockTri from '../img/blockTri.png'
@@ -20,25 +20,35 @@ import lgPlatform from '../img/lgPlatform.png'
 import tPlatform from '../img/tPlatform.png'
 import xtPlatform from '../img/xtPlatform.png'
 import flagPoleSprite from '../img/flagPole.png'
-import spriteRunLeft from '../img/spriteRunLeft.png'
-import spriteRunRight from '../img/spriteRunRight.png'
-import spriteStandLeft from '../img/spriteStandLeft.png'
-import spriteStandRight from '../img/spriteStandRight.png'
-import spriteMarioRunLeft from '../img/spriteMarioRunLeft.png'
-import spriteMarioRunRight from '../img/spriteMarioRunRight.png'
-import spriteMarioStandLeft from '../img/spriteMarioStandLeft.png'
-import spriteMarioStandRight from '../img/spriteMarioStandRight.png'
-import spriteMarioJumpRight from '../img/spriteMarioJumpRight.png'
-import spriteMarioJumpLeft from '../img/spriteMarioJumpLeft.png'
-import spriteFireFlowerRunRight from '../img/spriteFireFlowerRunRight.png'
-import spriteFireFlowerRunLeft from '../img/spriteFireFlowerRunLeft.png'
-import spriteFireFlowerStandRight from '../img/spriteFireFlowerStandRight.png'
-import spriteFireFlowerStandLeft from '../img/spriteFireFlowerStandLeft.png'
-import spriteFireFlowerJumpRight from '../img/spriteFireFlowerJumpRight.png'
-import spriteFireFlowerJumpLeft from '../img/spriteFireFlowerJumpLeft.png'
+
+//import spriteMarioRunLeft from '../img/spriteMarioRunLeft.png'
+//import spriteMarioRunRight from '../img/spriteMarioRunRight.png'
+//import spriteMarioStandLeft from '../img/spriteMarioStandLeft.png'
+//import spriteMarioStandRight from '../img/spriteMarioStandRight.png'
+//import spriteMarioJumpRight from '../img/spriteMarioJumpRight.png'
+//import spriteMarioJumpLeft from '../img/spriteMarioJumpLeft.png'
+
+//test
+import spriteMarioRunLeft from '../img/RunL.png'
+import spriteMarioRunRight from '../img/RunR.png'
+import spriteMarioStandRight from '../img/IdleR.png'
+import spriteMarioStandLeft from '../img/IdleL.png'
+import spriteMarioJumpRight from '../img/JumpR.png'
+import spriteMarioJumpLeft from '../img/JumpL.png'
+
+
+
+import spriteFireFlowerRunLeft from '../img/Run1.png'
+import spriteFireFlowerRunRight from '../img/Run.png'
+import spriteFireFlowerStandRight from '../img/Idle.png'
+import spriteFireFlowerStandLeft from '../img/Idle1.png'
+import spriteFireFlowerJumpRight from '../img/Jump.png'
+import spriteFireFlowerJumpLeft from '../img/Jump1.png'
+
+
 import spriteFireFlower from '../img/spriteFireFlower.png'
 
-import spriteEnemy from '../img/spriteEnemy.png'
+import spriteEnemy from '../img/Walk.png'
 import { audio } from './audio.js'
 import { images } from './images.js'
 import 'regenerator-runtime/runtime';
@@ -46,122 +56,136 @@ import 'regenerator-runtime/runtime';
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = 1024
-canvas.height = 576
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
 
 let gravity = 1.5
 
 class Player {
   constructor() {
-    this.speed = 10
+    this.speed = 10;
     this.position = {
       x: 100,
-      y: 100
-    }
+      y: 100,
+    };
     this.velocity = {
       x: 0,
-      y: 0
-    }
+      y: 0,
+    };
 
-    this.scale = 0.3
-    this.width = 398 * this.scale
-    this.height = 353 * this.scale
+    this.width = 200;
+    this.height = 200;
 
-    this.image = createImage(spriteStandRight)
-    this.frames = 0
+    this.frameBuffer = 5;
+    this.elapsedFrames = 0;
+
+    this.frames = 0;
     this.sprites = {
       stand: {
         right: createImage(spriteMarioStandRight),
         left: createImage(spriteMarioStandLeft),
         fireFlower: {
           right: createImage(spriteFireFlowerStandRight),
-          left: createImage(spriteFireFlowerStandLeft)
-        }
+          left: createImage(spriteFireFlowerStandLeft),
+        },
       },
       run: {
         right: createImage(spriteMarioRunRight),
         left: createImage(spriteMarioRunLeft),
         fireFlower: {
           right: createImage(spriteFireFlowerRunRight),
-          left: createImage(spriteFireFlowerRunLeft)
-        }
+          left: createImage(spriteFireFlowerRunLeft),
+        },
       },
       jump: {
         right: createImage(spriteMarioJumpRight),
         left: createImage(spriteMarioJumpLeft),
         fireFlower: {
           right: createImage(spriteFireFlowerJumpRight),
-          left: createImage(spriteFireFlowerJumpLeft)
-        }
-      }
-    }
+          left: createImage(spriteFireFlowerJumpLeft),
+        },
+      },
+    };
 
-    this.currentSprite = this.sprites.stand.right
-    this.currentCropWidth = 398
+    this.currentSprite = this.sprites.stand.right;
+    this.currentCropWidth = 128;
     this.powerUps = {
-      fireFlower: false
-    }
-    this.invincible = false
-    this.opacity = 1
+      fireFlower: false,
+    };
+    this.invincible = false;
+    this.opacity = 1;
   }
 
   draw() {
-    c.save()
+    c.save();
+    
+    c.globalAlpha = this.opacity;
+    c.globalAlpha = this.opacity
+    c.fillStyle = 'rgba(255, 0, 0, .2)'
+    c.fillRect(this.position.x, this.position.y, this.width, this.height)
     c.drawImage(
       this.currentSprite,
       this.currentCropWidth * this.frames,
       0,
       this.currentCropWidth,
-      353,
+      128,
       this.position.x,
       this.position.y,
       this.width,
       this.height
-    )
-    c.restore()
+    );
+    c.restore();
   }
 
   update() {
-    this.frames++
-    const { currentSprite, sprites } = this
+    this.elapsedFrames++;
+    if (this.elapsedFrames % this.frameBuffer === 0) {
+      this.frames++;
+    }
 
-    if (
-      this.frames > 58 &&
-      (currentSprite === sprites.stand.right ||
-        currentSprite === sprites.stand.left ||
-        currentSprite === sprites.stand.fireFlower.left ||
-        currentSprite === sprites.stand.fireFlower.right)
-    )
-      this.frames = 0
-    else if (
-      this.frames > 28 &&
-      (currentSprite === sprites.run.right ||
-        currentSprite === sprites.run.left ||
-        currentSprite === sprites.run.fireFlower.right ||
-        currentSprite === sprites.run.fireFlower.left)
-    )
-      this.frames = 0
-    else if (
-      currentSprite === sprites.jump.right ||
-      currentSprite === sprites.jump.left ||
-      currentSprite === sprites.jump.fireFlower.right ||
-      currentSprite === sprites.jump.fireFlower.left
-    )
-      this.frames = 0
+    this.checkResetFrames();
 
-    this.draw()
-    this.position.x += this.velocity.x
-    this.position.y += this.velocity.y
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
 
     if (this.position.y + this.height + this.velocity.y <= canvas.height)
-      this.velocity.y += gravity
+      this.velocity.y += gravity;
 
     if (this.invincible) {
-      if (this.opacity === 1) this.opacity = 0
-      else this.opacity = 1
-    } else this.opacity = 1
+      if (this.opacity === 1) this.opacity = 0;
+      else this.opacity = 1;
+    } else this.opacity = 1;
+
+    this.draw();
+  }
+
+  checkResetFrames() {
+    if (this.frames >= 8) {
+      const { currentSprite, sprites } = this;
+      if (
+        (currentSprite === sprites.stand.right ||
+          currentSprite === sprites.stand.left ||
+          currentSprite === sprites.stand.fireFlower.left ||
+          currentSprite === sprites.stand.fireFlower.right) ||
+        (currentSprite === sprites.run.right ||
+          currentSprite === sprites.run.left ||
+          currentSprite === sprites.run.fireFlower.right ||
+          currentSprite === sprites.run.fireFlower.left) ||
+        (currentSprite === sprites.jump.right ||
+          currentSprite === sprites.jump.left ||
+          currentSprite === sprites.jump.fireFlower.right ||
+          currentSprite === sprites.jump.fireFlower.left)
+      ) {
+        this.resetFrames();
+      }
+    }
+  }
+
+  resetFrames() {
+    this.frames = 0;
   }
 }
+
 
 class Platform {
   constructor({ x, y, image, block, text }) {
@@ -242,51 +266,67 @@ class Enemy {
       y: velocity.y
     }
 
-    this.width = 43.33
-    this.height = 50
+    this.width = 100;
+    this.height = 100;
 
-    this.image = createImage(spriteEnemy)
-    this.frames = 0
+    this.image = createImage(spriteEnemy);
+    this.frames = 0;
 
-    this.distance = distance
+    this.distance = distance;
+    this.frameBuffer = 3;
+    this.elapsedFrames = 0;
   }
 
   draw() {
-    // c.fillStyle = 'red'
-    // c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    const spriteWidth = this.image.width / 9;
+    const spriteHeight = 128;
+  
+    c.save(); 
 
+    if (this.velocity.x < 0) {
+      c.scale(-1, 1); 
+    }
+  
     c.drawImage(
       this.image,
-      130 * this.frames,
+      (spriteWidth * this.frames),
       0,
-      130,
-      150,
-      this.position.x,
+      spriteWidth,
+      spriteHeight,
+      (this.velocity.x < 0 ? -this.position.x - this.width : this.position.x),
       this.position.y,
       this.width,
       this.height
-    )
+    );
+  
+    c.restore(); 
   }
+  
 
   update() {
-    this.frames++
-    if (this.frames >= 58) this.frames = 0
-    this.draw()
-    this.position.x += this.velocity.x
-    this.position.y += this.velocity.y
+    this.elapsedFrames++;
+    if (this.elapsedFrames % this.frameBuffer === 0) {
+      this.frames++;
+      }
+      if (this.frames >= 9) this.frames = 2;
+      this.draw();
+      this.position.x += this.velocity.x;
+      this.position.y += this.velocity.y;
 
-    if (this.position.y + this.height + this.velocity.y <= canvas.height)
-      this.velocity.y += gravity
+      if (this.position.y + this.height + this.velocity.y <= canvas.height)
+        this.velocity.y += gravity;
 
-    // walk the enemy back and forth
-    this.distance.traveled += Math.abs(this.velocity.x)
+      // Walk the enemy back and forth
+      this.distance.traveled += Math.abs(this.velocity.x);
 
-    if (this.distance.traveled > this.distance.limit) {
-      this.distance.traveled = 0
-      this.velocity.x = -this.velocity.x
-    }
+      if (this.distance.traveled > this.distance.limit) {
+        this.distance.traveled = 0;
+        this.velocity.x = -this.velocity.x;
+      }
+    
   }
 }
+
 
 class FireFlower {
   constructor({ position, velocity }) {
@@ -665,7 +705,7 @@ async function init() {
   genericObjects = [
     new GenericObject({
       x: -1,
-      y: -1,
+      y: -75,
       image: createImage(background)
     }),
   ]
@@ -1561,7 +1601,7 @@ addEventListener('keydown', ({ keyCode }) => {
         new Particle({
           position: {
             x: player.position.x + player.width / 2,
-            y: player.position.y + player.height / 2
+            y: player.position.y + player.height / 2 + 50
           },
           velocity: {
             x: velocity,
