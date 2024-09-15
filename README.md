@@ -1,7 +1,6 @@
 # Plateform-game
-Mon Portfolio
 
-Ce portfolio est la solution idéale pour moi de vous présenter de manière moderne et rapide mes projets et compétences, en utilisant ES6 et webpack.
+Voici un mini jeu de plateforme 
 
 ## Pour Commencer
 
